@@ -20,6 +20,7 @@ def save_file():
         filetypes=[("JPG files", "*.jpg")],
         defaultextension=".jpg",
         confirmoverwrite=False,
+        initialfile="screenshot.jpg"
 
     )
     return filename

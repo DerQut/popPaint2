@@ -4,6 +4,7 @@ import assets
 import ui_elements
 import window
 
+NONE = 0
 LINE = 1
 RECT = 2
 ELLIPSE = 3
@@ -41,10 +42,10 @@ class Cursor:
 
     def __init__(self, painting_surface, colour):
 
-        self.tool = LINE
+        self.tool = NONE
 
         self.colour = colour
-        self.backup_colour = (10, 10, 10)
+        self.backup_colour = (255, 10, 10)
 
         self.pos = (0, 0)
 
@@ -62,26 +63,28 @@ class Cursor:
         elif self.tool == ELLIPSE:
             pygame.draw.ellipse(self.painting_surface.window.screen, self.colour, get_pg_rect((self.pos[0] + self.painting_surface.x_cord, self.pos[1] + self.painting_surface.y_cord), (self.pos_buffer[0] + self.painting_surface.x_cord, self.pos_buffer[1] + self.painting_surface.y_cord)))
         elif self.tool == TEXT:
-            pygame.draw.rect(self.painting_surface.window.screen, self.colour, get_pg_rect((self.pos[0]+self.painting_surface.x_cord, self.pos[1]+self.painting_surface.y_cord), (self.pos_buffer[0]+self.painting_surface.x_cord, self.pos_buffer[1]+self.painting_surface.y_cord)), 5)
+            pygame.draw.rect(self.painting_surface.window.screen, self.backup_colour, get_pg_rect((self.pos[0]+self.painting_surface.x_cord, self.pos[1]+self.painting_surface.y_cord), (self.pos_buffer[0]+self.painting_surface.x_cord, self.pos_buffer[1]+self.painting_surface.y_cord)), 5)
 
     def finish(self):
         rect = get_pg_rect(self.pos, self.pos_buffer)
 
         if self.tool == LINE:
             self.painting_surface.elements.append(ui_elements.Line(self.painting_surface, self.pos_buffer, self.pos, self.thickness, self.colour))
+            self.painting_surface.elements.pop()
 
         elif self.tool == RECT:
             self.painting_surface.elements.append(ui_elements.Rect(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.colour))
+            self.painting_surface.elements.pop()
 
         elif self.tool == ELLIPSE:
             self.painting_surface.elements.append(ui_elements.Ellipse(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.colour))
+            self.painting_surface.elements.pop()
 
         elif self.tool == TEXT:
             new = ui_elements.TextField(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.backup_colour, "Text", self.colour, assets.SF_Pro_Medium_18, 128, (pygame.K_a, pygame.K_z), [pygame.K_SPACE])
             new.is_highlighted = True
             self.painting_surface.elements.append(new)
-
-        self.painting_surface.elements.pop()
+            self.painting_surface.elements.pop()
 
         for surface in self.painting_surface.window.surfaces:
             surface.draw()

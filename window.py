@@ -119,10 +119,10 @@ class Window:
 
                     if element.type == "Button" or element.type == "LabelledButton" or element.type == "TextField":
                         if element.mouse_check(mouse_pos) and self.is_clicking:
+                            element.is_highlighted = True
                             if element.type != "TextField":
                                 program.button_handler(True, element.unicode_id, element.needs_shift, element.needs_shift)
                                 element.colour = element.secondary_colour
-                                element.is_highlighted = True
                             else:
                                 ...
 

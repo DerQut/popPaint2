@@ -32,14 +32,8 @@ def button_handler(down, event_key, needs_shifting, is_shifting):
         print(event_key)
         if event_key == pygame.K_PERCENT:
             cursor.pos_buffer = cursor.pos
-        elif event_key == 0:
-            cursor.tool = paint.LINE
-        elif event_key == 1:
-            cursor.tool = paint.RECT
-        elif event_key == 2:
-            cursor.tool = paint.ELLIPSE
-        elif event_key == 3:
-            cursor.tool = paint.TEXT
+        elif 10 >= event_key >= 0:
+            cursor.tool = event_key
 
         elif event_key == pygame.K_DELETE:
             if len(paint_layer.elements):
@@ -65,7 +59,9 @@ cursor = paint.Cursor(paint_layer, (0, 0, 0))
 
 
 input_layer = window.Surface(program_window, 0, 0, 80, 720, assets.bg_colour_inactive)
-pencil_button = ui_elements.LabelledButton(input_layer, 0, 0, 40, 40, assets.blue, 0, assets.dark_blue, "Line", assets.text_colour, assets.SF_Pro_Light_16, 0)
-rect_button = ui_elements.LabelledButton(input_layer, 40, 0, 40, 40, assets.blue, 1, assets.dark_blue, "Rect", assets.text_colour, assets.SF_Pro_Light_16, 0)
-ellipse_button = ui_elements.LabelledButton(input_layer, 0, 40, 40, 40, assets.blue, 2, assets.dark_blue, "Ellipse", assets.text_colour, assets.SF_Pro_Light_16, 0)
-text_button = ui_elements.LabelledButton(input_layer, 40, 40, 40, 40, assets.blue, 3, assets.dark_blue, "Text", assets.text_colour, assets.SF_Pro_Light_16, 0)
+
+pencil_button = ui_elements.LabelledButton(input_layer, 0, 0, 40, 40, assets.blue, 1, assets.dark_blue, "Line", assets.text_colour, assets.SF_Pro_Light_16, 0)
+rect_button = ui_elements.LabelledButton(input_layer, 40, 0, 40, 40, assets.blue, 2, assets.dark_blue, "Rect", assets.text_colour, assets.SF_Pro_Light_16, 0)
+ellipse_button = ui_elements.LabelledButton(input_layer, 0, 40, 40, 40, assets.blue, 3, assets.dark_blue, "Ellipse", assets.text_colour, assets.SF_Pro_Light_16, 0)
+text_button = ui_elements.LabelledButton(input_layer, 40, 40, 40, 40, assets.blue, 4, assets.dark_blue, "Text", assets.text_colour, assets.SF_Pro_Light_16, 0)
+none_button = ui_elements.LabelledButton(input_layer, 0, 80, 40, 40, assets.blue, 0, assets.dark_blue, "None", assets.text_colour, assets.SF_Pro_Light_16, 0)
