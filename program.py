@@ -34,16 +34,16 @@ def button_handler(down, event_key, needs_shifting, is_shifting):
             cursor.tool = paint.RECT
 
         elif event_key == pygame.K_DELETE:
-            paint_layer.elements.pop()
+            print(paint_layer.elements.pop())
         elif event_key == pygame.K_F1:
-            parser.get_colour()
+            cursor.colour = parser.get_colour(cursor.colour)
 
     else:
         if event_key == pygame.K_PERCENT:
             cursor.finish()
 
 
-program_window = window.Window(1280, 720, DOUBLEBUF, assets.bg_colour, "The Graphing Engine")
+program_window = window.Window(1280, 720, DOUBLEBUF, assets.bg_colour, "Paint")
 
 
 input_layer = window.Surface(program_window, 0, 0, 80, 720, assets.bg_colour_inactive)

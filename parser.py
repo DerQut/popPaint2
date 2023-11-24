@@ -31,6 +31,9 @@ def get_name(filename):
     return ''.join(new_list)
 
 
-def get_colour():
-    colour_code = colorchooser.askcolor(title="Choose color")
-    print(colour_code)
+def get_colour(previous_colour):
+    colour_code = colorchooser.askcolor(title="Choose color", color=previous_colour)
+    if bool(colour_code[0]):
+        return colour_code[0]
+
+    return previous_colour

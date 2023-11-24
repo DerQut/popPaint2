@@ -56,7 +56,6 @@ class Cursor:
         if self.tool == LINE:
             pygame.draw.line(self.painting_surface.window.screen, self.colour, (self.pos_buffer[0]+self.painting_surface.x_cord, self.pos_buffer[1]+self.painting_surface.y_cord), (self.pos[0]+self.painting_surface.x_cord, self.pos[1]+self.painting_surface.y_cord), self.thickness)
         elif self.tool == RECT:
-            print("rectring")
             pygame.draw.rect(self.painting_surface.window.screen, self.colour, get_pg_rect((self.pos[0]+self.painting_surface.x_cord, self.pos[1]+self.painting_surface.y_cord), (self.pos_buffer[0]+self.painting_surface.x_cord, self.pos_buffer[1]+self.painting_surface.y_cord)))
 
     def finish(self):
@@ -65,3 +64,4 @@ class Cursor:
         elif self.tool == RECT:
             rect = get_pg_rect(self.pos, self.pos_buffer)
             self.painting_surface.elements.append(ui_elements.Rect(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.colour))
+        self.painting_surface.draw()
