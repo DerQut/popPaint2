@@ -32,11 +32,17 @@ def button_handler(down, event_key, needs_shifting, is_shifting):
             cursor.tool = paint.LINE
         elif event_key == 1:
             cursor.tool = paint.RECT
+        elif event_key == 2:
+            cursor.tool = paint.ELLIPSE
 
         elif event_key == pygame.K_DELETE:
             print(paint_layer.elements.pop())
         elif event_key == pygame.K_F1:
             cursor.colour = parser.get_colour(cursor.colour)
+        elif event_key == pygame.K_RETURN:
+            filename = parser.save_file()
+            if filename:
+                pygame.image.save(paint_layer.pg_surface, filename)
 
     else:
         if event_key == pygame.K_PERCENT:
@@ -46,10 +52,13 @@ def button_handler(down, event_key, needs_shifting, is_shifting):
 program_window = window.Window(1280, 720, DOUBLEBUF, assets.bg_colour, "Paint")
 
 
+paint_layer = paint.PaintingSurface(program_window, 0, 0, 1280, 720, (255, 255, 255))
+paint_layer.button = ui_elements.Button(paint_layer, 80, 0, paint_layer.x_size-80, paint_layer.y_size, paint_layer.colour, pygame.K_PERCENT, paint_layer.colour, False, False)
+cursor = paint.Cursor(paint_layer, (0, 0, 0))
+
+
 input_layer = window.Surface(program_window, 0, 0, 80, 720, assets.bg_colour_inactive)
 pencil_button = ui_elements.LabelledButton(input_layer, 0, 0, 40, 40, assets.blue, 0, assets.dark_blue, "Line", assets.text_colour, assets.SF_Pro_Light_16, 0)
-brush_button = ui_elements.LabelledButton(input_layer, 40, 0, 40, 40, assets.blue, 1, assets.dark_blue, "Rect", assets.text_colour, assets.SF_Pro_Light_16, 0)
+rect_button = ui_elements.LabelledButton(input_layer, 40, 0, 40, 40, assets.blue, 1, assets.dark_blue, "Rect", assets.text_colour, assets.SF_Pro_Light_16, 0)
+ellipse_button = ui_elements.LabelledButton(input_layer, 0, 40, 40, 40, assets.blue, 2, assets.dark_blue, "Ellipse", assets.text_colour, assets.SF_Pro_Light_16, 0)
 
-
-paint_layer = paint.PaintingSurface(program_window, 80, 0, 1200, 720, (255, 255, 255))
-cursor = paint.Cursor(paint_layer, (0, 0, 0))

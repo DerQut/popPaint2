@@ -28,6 +28,12 @@ class Rect:
         self.surface.pg_surface.fill(self.colour, self.rect)
 
 
+class Ellipse(Rect):
+
+    def draw(self):
+        pygame.draw.ellipse(self.surface.pg_surface, self.colour, self.rect)
+
+
 class Element:
 
     def __init__(self, surface, x_cord, y_cord, texture, is_visible=True):

@@ -27,13 +27,12 @@ def get_pg_rect(pos1, pos2):
     return rect
 
 
-
 class PaintingSurface(window.Surface):
 
     def __init__(self, window, x_cord, y_cord, x_size, y_size, colour):
         super().__init__(window, x_cord, y_cord, x_size, y_size, colour)
 
-        self.button = ui_elements.Button(self, 0, 0, self.x_size, self.y_size, self.colour, pygame.K_PERCENT, self.colour, False, False)
+        self.button = None
 
 
 class Cursor:
@@ -57,11 +56,20 @@ class Cursor:
             pygame.draw.line(self.painting_surface.window.screen, self.colour, (self.pos_buffer[0]+self.painting_surface.x_cord, self.pos_buffer[1]+self.painting_surface.y_cord), (self.pos[0]+self.painting_surface.x_cord, self.pos[1]+self.painting_surface.y_cord), self.thickness)
         elif self.tool == RECT:
             pygame.draw.rect(self.painting_surface.window.screen, self.colour, get_pg_rect((self.pos[0]+self.painting_surface.x_cord, self.pos[1]+self.painting_surface.y_cord), (self.pos_buffer[0]+self.painting_surface.x_cord, self.pos_buffer[1]+self.painting_surface.y_cord)))
+        elif self.tool == ELLIPSE:
+            pygame.draw.ellipse(self.painting_surface.window.screen, self.colour, get_pg_rect((self.pos[0] + self.painting_surface.x_cord, self.pos[1] + self.painting_surface.y_cord), (self.pos_buffer[0] + self.painting_surface.x_cord, self.pos_buffer[1] + self.painting_surface.y_cord)))
 
     def finish(self):
+        rect = get_pg_rect(self.pos, self.pos_buffer)
+
         if self.tool == LINE:
             self.painting_surface.elements.append(ui_elements.Line(self.painting_surface, self.pos_buffer, self.pos, self.thickness, self.colour))
+
         elif self.tool == RECT:
-            rect = get_pg_rect(self.pos, self.pos_buffer)
             self.painting_surface.elements.append(ui_elements.Rect(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.colour))
-        self.painting_surface.draw()
+
+        elif self.tool == ELLIPSE:
+            self.painting_surface.elements.append(ui_elements.Ellipse(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.colour))
+
+        for surface in self.painting_surface.window.surfaces:
+            surface.draw()

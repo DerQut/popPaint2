@@ -5,13 +5,23 @@ from tkinter import colorchooser
 def get_file():
     filename = filedialog.askopenfilename(
         filetypes=(
-            ("XY files", "*.xy"),
+            ("JPG files", "*.jpg"),
             ("Text files", "*.txt"),
             ("Python Files", ("*.py", "*.pyx")),
             ("All Files", "*.*")
         )
     )
 
+    return filename
+
+
+def save_file():
+    filename = filedialog.asksaveasfilename(
+        filetypes=[("JPG files", "*.jpg")],
+        defaultextension=".jpg",
+        confirmoverwrite=False,
+
+    )
     return filename
 
 
