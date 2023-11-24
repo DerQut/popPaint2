@@ -1,11 +1,13 @@
 import pygame
 
+import assets
 import ui_elements
 import window
 
 LINE = 1
 RECT = 2
 ELLIPSE = 3
+TEXT = 4
 
 
 def get_pg_rect(pos1, pos2):
@@ -42,6 +44,7 @@ class Cursor:
         self.tool = LINE
 
         self.colour = colour
+        self.backup_colour = (10, 10, 10)
 
         self.pos = (0, 0)
 
@@ -58,6 +61,8 @@ class Cursor:
             pygame.draw.rect(self.painting_surface.window.screen, self.colour, get_pg_rect((self.pos[0]+self.painting_surface.x_cord, self.pos[1]+self.painting_surface.y_cord), (self.pos_buffer[0]+self.painting_surface.x_cord, self.pos_buffer[1]+self.painting_surface.y_cord)))
         elif self.tool == ELLIPSE:
             pygame.draw.ellipse(self.painting_surface.window.screen, self.colour, get_pg_rect((self.pos[0] + self.painting_surface.x_cord, self.pos[1] + self.painting_surface.y_cord), (self.pos_buffer[0] + self.painting_surface.x_cord, self.pos_buffer[1] + self.painting_surface.y_cord)))
+        elif self.tool == TEXT:
+            pygame.draw.rect(self.painting_surface.window.screen, self.colour, get_pg_rect((self.pos[0]+self.painting_surface.x_cord, self.pos[1]+self.painting_surface.y_cord), (self.pos_buffer[0]+self.painting_surface.x_cord, self.pos_buffer[1]+self.painting_surface.y_cord)), 5)
 
     def finish(self):
         rect = get_pg_rect(self.pos, self.pos_buffer)
@@ -70,6 +75,13 @@ class Cursor:
 
         elif self.tool == ELLIPSE:
             self.painting_surface.elements.append(ui_elements.Ellipse(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.colour))
+
+        elif self.tool == TEXT:
+            new = ui_elements.TextField(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.backup_colour, "Text", self.colour, assets.SF_Pro_Medium_18, 128, (pygame.K_a, pygame.K_z), [pygame.K_SPACE])
+            new.is_highlighted = True
+            self.painting_surface.elements.append(new)
+
+        self.painting_surface.elements.pop()
 
         for surface in self.painting_surface.window.surfaces:
             surface.draw()

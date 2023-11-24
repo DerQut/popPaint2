@@ -222,5 +222,7 @@ class Line:
 
         self.type = "Line"
 
+        self.surface.elements.append(self)
+
     def draw(self):
         pygame.draw.line(self.surface.pg_surface, self.colour, self.start, self.end, self.thickness)
