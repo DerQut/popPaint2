@@ -27,6 +27,9 @@ class Rect:
     def draw(self):
         self.surface.pg_surface.fill(self.colour, self.rect)
 
+    def rect_update(self):
+        self.rect = pygame.rect.Rect(self.x_cord, self.y_cord, self.x_size, self.y_size)
+
 
 class Ellipse(Rect):
 

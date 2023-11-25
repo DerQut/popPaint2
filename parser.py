@@ -1,5 +1,13 @@
 from tkinter import filedialog
 from tkinter import colorchooser
+from tkinter import simpledialog
+
+
+def get_value(title, prompt, initial_value):
+    value = simpledialog.askinteger(title, prompt, initialvalue=initial_value)
+    if value is not None:
+        return value
+    return initial_value
 
 
 def get_file():
@@ -15,15 +23,27 @@ def get_file():
     return filename
 
 
-def save_file():
+def save_file(title="Zapisz jako...", filetypes=[("BMP files", "*.bmp")], defaultextension=".bmp", confirmoverwrite=False, initialfile="screenshot.bmp"):
     filename = filedialog.asksaveasfilename(
-        filetypes=[("JPG files", "*.jpg")],
-        defaultextension=".jpg",
-        confirmoverwrite=False,
-        initialfile="screenshot.jpg"
+        filetypes=filetypes,
+        defaultextension=defaultextension,
+        confirmoverwrite=confirmoverwrite,
+        initialfile=initialfile,
+        title=title
 
     )
     return filename
+
+
+def read_file(title="Wczytaj plik", filetypes=[("BMP files", "*.bmp")], defaultextension=".bmp", initialfile="screenshot.bmp"):
+    filename = filedialog.askopenfilenames(
+        filetypes=filetypes,
+        defaultextension=defaultextension,
+        initialfile=initialfile,
+        title=title
+    )
+    if filename is not ():
+        return filename[0]
 
 
 def get_name(filename):
