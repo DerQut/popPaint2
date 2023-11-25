@@ -77,8 +77,7 @@ F2-  Zmiana koloru głównego
 F3-  Zmiana koloru zapasowego
 F4-  Zamiana kolorów
 
-F9-  Zmiana grubości pędzla
-F10- Zmiana rozmiaru czcionki
+F9-  Opcje narzędzia
  
 F11- Zapis do pliku
 F12- Odczyt z pliku""")
@@ -102,7 +101,11 @@ F12- Odczyt z pliku""")
                 new = ui_elements.Element(paint_layer, 0, 0, pygame.image.load(filename).convert(), True)
 
         elif event_key == pygame.K_F9:
-            cursor.thickness = parser.get_value("Zmiana grubości pędzla", "Grubość:", cursor.thickness)
+            if cursor.tool != paint.TEXT:
+                cursor.thickness = parser.get_value("Zmiana grubości pędzla", "Grubość:", cursor.thickness)
+            else:
+                cursor.font_size = parser.get_value("Zmiana rozmiaru czcionki", "Rozmiar:", cursor.font_size)
+                cursor.render_font()
 
         highlight.rect_update()
     else:

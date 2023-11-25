@@ -55,6 +55,10 @@ class Cursor:
 
         self.thickness = 5
 
+        self.font_size = 18
+        self.font_name = "assets/SFPRODISPLAYMEDIUM.OTF"
+        self.font = pygame.font.Font(self.font_name, self.font_size)
+
         self.painting_surface = painting_surface
 
     def paint(self):
@@ -83,7 +87,7 @@ class Cursor:
             self.painting_surface.elements.pop()
 
         elif self.tool == TEXT:
-            new = ui_elements.TextField(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.backup_colour, "Text", self.colour, assets.SF_Pro_Medium_18, 128, (pygame.K_a, pygame.K_z), [pygame.K_SPACE])
+            new = ui_elements.TextField(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.backup_colour, "Text", self.colour, self.font, 128, (pygame.K_a, pygame.K_z), [pygame.K_SPACE])
             new.is_highlighted = True
             self.painting_surface.elements.append(new)
             self.painting_surface.elements.pop()
@@ -95,3 +99,6 @@ class Cursor:
         buffer = self.colour
         self.colour = self.backup_colour
         self.backup_colour = buffer
+
+    def render_font(self):
+        self.font = pygame.font.Font(self.font_name, self.font_size)
