@@ -115,7 +115,7 @@ class Window:
             self.is_clicking = True
 
             for surface in self.surfaces:
-                for element in surface.elements:
+                for element in reversed(surface.elements):
 
                     if element.type == "Button" or element.type == "LabelledButton" or element.type == "TextField":
                         if element.mouse_check(mouse_pos) and self.is_clicking:
@@ -123,8 +123,7 @@ class Window:
                             if element.type != "TextField":
                                 program.button_handler(True, element.unicode_id, element.needs_shift, element.needs_shift)
                                 element.colour = element.secondary_colour
-                            else:
-                                ...
+                                break
 
     def mouse_button_up_handler(self, event):
         if event.button == 1:
