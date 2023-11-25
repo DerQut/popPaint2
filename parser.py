@@ -43,6 +43,7 @@ def read_file(title="Wczytaj plik", filetypes=[("BMP files", "*.bmp")], defaulte
         title=title
     )
     if filename != () and filename is not None:
+        # useless fucking parity thing between linux and windows because goddamn tkinter can't work on both the same way
         if type(filename) is tuple:
             return filename[0]
         return filename
