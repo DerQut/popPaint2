@@ -42,8 +42,10 @@ def read_file(title="Wczytaj plik", filetypes=[("BMP files", "*.bmp")], defaulte
         initialfile=initialfile,
         title=title
     )
-    if filename is not ():
-        return filename[0]
+    if filename != () and filename is not None:
+        if type(filename) is tuple:
+            return filename[0]
+        return filename
 
 
 def get_name(filename):
