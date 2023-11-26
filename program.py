@@ -113,8 +113,6 @@ F12- Odczyt z pliku""")
             if filename:
                 new = ui_elements.Element(paint_layer, 0, 0, pygame.image.load(filename).convert(), True)
 
-        
-
         highlight.rect_update()
     else:
         if event_key == pygame.K_PERCENT:
