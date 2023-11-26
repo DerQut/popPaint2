@@ -25,7 +25,6 @@ def loop_action():
             element.center_text()
 
     cursor.pos = (mouse_pos[0]-paint_layer.x_cord, mouse_pos[1]-paint_layer.y_cord)
-    print(cursor.tool)
 
     if paint_layer.button.is_highlighted:
         cursor.paint()
@@ -78,7 +77,10 @@ F2-  Zmiana koloru głównego
 F3-  Zmiana koloru zapasowego
 F4-  Zamiana kolorów
 
-F9-  Opcje narzędzia
+F9-  Zmiana grubości linii
+       oraz rozmiaru czcionki
+       
+F10- Zmiana czcionki
  
 F11- Zapis do pliku
 F12- Odczyt z pliku""")
@@ -90,6 +92,17 @@ F12- Odczyt z pliku""")
         elif event_key == pygame.K_F4:
             cursor.swap_colours()
 
+        elif event_key == pygame.K_F9:
+            if cursor.tool != paint.TEXT:
+                cursor.thickness = parser.get_value("Zmiana grubości pędzla", "Grubość:", cursor.thickness)
+            else:
+                cursor.font_size = parser.get_value("Zmiana rozmiaru czcionki", "Rozmiar:", cursor.font_size)
+                cursor.render_font()
+
+        elif event_key == pygame.K_F10:
+            cursor.font_name = parser.read_file("Wybór czcionki", [("OTF Files", "*.otf")], "*.otf", "")
+            cursor.render_font()
+
         elif event_key == pygame.K_F11:
             filename = parser.save_file()
             if filename:
@@ -98,15 +111,9 @@ F12- Odczyt z pliku""")
         elif event_key == pygame.K_F12:
             filename = parser.read_file()
             if filename:
-                print(filename)
                 new = ui_elements.Element(paint_layer, 0, 0, pygame.image.load(filename).convert(), True)
 
-        elif event_key == pygame.K_F9:
-            if cursor.tool != paint.TEXT:
-                cursor.thickness = parser.get_value("Zmiana grubości pędzla", "Grubość:", cursor.thickness)
-            else:
-                cursor.font_size = parser.get_value("Zmiana rozmiaru czcionki", "Rozmiar:", cursor.font_size)
-                cursor.render_font()
+        
 
         highlight.rect_update()
     else:
