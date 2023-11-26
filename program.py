@@ -25,6 +25,7 @@ def loop_action():
             element.center_text()
 
     cursor.pos = (mouse_pos[0]-paint_layer.x_cord, mouse_pos[1]-paint_layer.y_cord)
+    print(cursor.tool)
 
     if paint_layer.button.is_highlighted:
         cursor.paint()
@@ -59,7 +60,7 @@ def button_handler(down, event_key, needs_shifting, is_shifting):
             cursor.tool = paint.TEXT
 
         elif event_key == pygame.K_DELETE:
-            if len(paint_layer.elements):
+            if len(paint_layer.elements) > 1:
                 if paint_layer.elements.pop().type == "Text":
                     paint_layer.elements.pop()
         elif event_key == pygame.K_F1:
