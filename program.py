@@ -96,12 +96,11 @@ F12- Odczyt z pliku""")
             if cursor.tool != paint.TEXT:
                 cursor.thickness = parser.get_value("Zmiana grubości pędzla", "Grubość:", cursor.thickness)
             else:
+                print(cursor.font_name)
                 cursor.font_size = parser.get_value("Zmiana rozmiaru czcionki", "Rozmiar:", cursor.font_size)
+                cursor.font_name = parser.read_file("Wybór czcionki", [("OTF Files", "*.otf")], "*.otf", cursor.font_name)
+                print(cursor.font_name)
                 cursor.render_font()
-
-        elif event_key == pygame.K_F10:
-            cursor.font_name = parser.read_file("Wybór czcionki", [("OTF Files", "*.otf")], "*.otf", "")
-            cursor.render_font()
 
         elif event_key == pygame.K_F11:
             filename = parser.save_file()
