@@ -3,7 +3,7 @@ import pygame
 
 class Rect:
 
-    def __init__(self, surface, x_cord, y_cord, x_size, y_size, main_colour, is_visible=True):
+    def __init__(self, surface, x_cord, y_cord, x_size, y_size, main_colour, is_visible=True, width=0):
 
         self.surface = surface
 
@@ -18,6 +18,8 @@ class Rect:
 
         self.is_visible = is_visible
 
+        self.width = width
+
         self.type = "Rect"
 
         self.rect = pygame.rect.Rect(x_cord, y_cord, x_size, y_size)
@@ -25,7 +27,7 @@ class Rect:
         self.surface.elements.append(self)
 
     def draw(self):
-        self.surface.pg_surface.fill(self.colour, self.rect)
+        pygame.draw.rect(self.surface.pg_surface, self.colour, self.rect, self.width)
 
     def rect_update(self):
         self.rect = pygame.rect.Rect(self.x_cord, self.y_cord, self.x_size, self.y_size)
@@ -34,7 +36,7 @@ class Rect:
 class Ellipse(Rect):
 
     def draw(self):
-        pygame.draw.ellipse(self.surface.pg_surface, self.colour, self.rect)
+        pygame.draw.ellipse(self.surface.pg_surface, self.colour, self.rect, self.width)
 
 
 class Element:
@@ -103,8 +105,8 @@ class Text(Element):
 
 class Button(Rect):
 
-    def __init__(self, surface, x_cord, y_cord, x_size, y_size, main_colour, unicode_id, secondary_colour, needs_shift=False, is_visible=True):
-        super().__init__(surface, x_cord, y_cord, x_size, y_size, main_colour, is_visible)
+    def __init__(self, surface, x_cord, y_cord, x_size, y_size, main_colour, unicode_id, secondary_colour, width=0, needs_shift=False, is_visible=True):
+        super().__init__(surface, x_cord, y_cord, x_size, y_size, main_colour, is_visible, width)
 
         self.unicode_id = unicode_id
 
@@ -127,8 +129,8 @@ class Button(Rect):
 
 class LabelledButton(Button):
 
-    def __init__(self, surface, x_cord, y_cord, x_size, y_size, colour, unicode_id, secondary_colour, text,  text_colour, text_font, needs_shift=False, is_visible=True):
-        super().__init__(surface, x_cord, y_cord, x_size, y_size, colour, unicode_id, secondary_colour, needs_shift, is_visible)
+    def __init__(self, surface, x_cord, y_cord, x_size, y_size, colour, unicode_id, secondary_colour, text,  text_colour, text_font, width=0, needs_shift=False, is_visible=True):
+        super().__init__(surface, x_cord, y_cord, x_size, y_size, colour, unicode_id, secondary_colour, width, needs_shift, is_visible)
 
         self.label = Text(self.surface, self.x_cord, self.y_cord, text_font, text, text_colour, is_visible)
 
@@ -145,8 +147,8 @@ class LabelledButton(Button):
 
 
 class TextField(LabelledButton):
-    def __init__(self, surface, x_cord, y_cord, x_size, y_size, colour, text,  text_colour, text_font, max_length, unicode_range=[], additional_characters=[], return_characters=[pygame.K_RETURN, pygame.K_ESCAPE], backspace_characters=[pygame.K_BACKSPACE], is_numerical=False, needs_shift=False, is_visible=True):
-        super().__init__(surface, x_cord, y_cord, x_size, y_size, colour, 0, colour, text,  text_colour, text_font, needs_shift, is_visible)
+    def __init__(self, surface, x_cord, y_cord, x_size, y_size, colour, text,  text_colour, text_font, max_length, width=0, unicode_range=[], additional_characters=[], return_characters=[pygame.K_RETURN, pygame.K_ESCAPE], backspace_characters=[pygame.K_BACKSPACE], is_numerical=False, needs_shift=False, is_visible=True):
+        super().__init__(surface, x_cord, y_cord, x_size, y_size, colour, 0, colour, text,  text_colour, text_font, width, needs_shift, is_visible)
 
         self.type = "TextField"
         self.max_length = max_length

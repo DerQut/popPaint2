@@ -54,6 +54,7 @@ class Cursor:
         self.pos_buffer = (0, 0)
 
         self.thickness = 5
+        self.width = 5
 
         self.font_size = 18
         self.font_name = "assets/SFPRODISPLAYMEDIUM.OTF"
@@ -65,11 +66,11 @@ class Cursor:
         if self.tool == LINE:
             pygame.draw.line(self.painting_surface.window.screen, self.colour, (self.pos_buffer[0]+self.painting_surface.x_cord, self.pos_buffer[1]+self.painting_surface.y_cord), (self.pos[0]+self.painting_surface.x_cord, self.pos[1]+self.painting_surface.y_cord), self.thickness)
         elif self.tool == RECT:
-            pygame.draw.rect(self.painting_surface.window.screen, self.colour, get_pg_rect((self.pos[0]+self.painting_surface.x_cord, self.pos[1]+self.painting_surface.y_cord), (self.pos_buffer[0]+self.painting_surface.x_cord, self.pos_buffer[1]+self.painting_surface.y_cord), 0, self.painting_surface.window.x_size, 0, self.painting_surface.window.y_size))
+            pygame.draw.rect(self.painting_surface.window.screen, self.colour, get_pg_rect((self.pos[0]+self.painting_surface.x_cord, self.pos[1]+self.painting_surface.y_cord), (self.pos_buffer[0]+self.painting_surface.x_cord, self.pos_buffer[1]+self.painting_surface.y_cord), 0, self.painting_surface.window.x_size, 0, self.painting_surface.window.y_size), self.width)
         elif self.tool == ELLIPSE:
-            pygame.draw.ellipse(self.painting_surface.window.screen, self.colour, get_pg_rect((self.pos[0] + self.painting_surface.x_cord, self.pos[1] + self.painting_surface.y_cord), (self.pos_buffer[0] + self.painting_surface.x_cord, self.pos_buffer[1] + self.painting_surface.y_cord), 0, self.painting_surface.window.x_size, 0, self.painting_surface.window.y_size))
+            pygame.draw.ellipse(self.painting_surface.window.screen, self.colour, get_pg_rect((self.pos[0] + self.painting_surface.x_cord, self.pos[1] + self.painting_surface.y_cord), (self.pos_buffer[0] + self.painting_surface.x_cord, self.pos_buffer[1] + self.painting_surface.y_cord), 0, self.painting_surface.window.x_size, 0, self.painting_surface.window.y_size), self.width)
         elif self.tool == TEXT:
-            pygame.draw.rect(self.painting_surface.window.screen, self.backup_colour, get_pg_rect((self.pos[0]+self.painting_surface.x_cord, self.pos[1]+self.painting_surface.y_cord), (self.pos_buffer[0]+self.painting_surface.x_cord, self.pos_buffer[1]+self.painting_surface.y_cord), 0, self.painting_surface.window.x_size, 0, self.painting_surface.window.y_size), 5)
+            pygame.draw.rect(self.painting_surface.window.screen, self.backup_colour, get_pg_rect((self.pos[0]+self.painting_surface.x_cord, self.pos[1]+self.painting_surface.y_cord), (self.pos_buffer[0]+self.painting_surface.x_cord, self.pos_buffer[1]+self.painting_surface.y_cord), 0, self.painting_surface.window.x_size, 0, self.painting_surface.window.y_size), self.width)
 
     def finish(self):
         rect = get_pg_rect(self.pos, self.pos_buffer, 0, self.painting_surface.x_size, 0, self.painting_surface.y_size)
@@ -79,15 +80,15 @@ class Cursor:
             self.painting_surface.elements.pop()
 
         elif self.tool == RECT:
-            self.painting_surface.elements.append(ui_elements.Rect(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.colour))
+            self.painting_surface.elements.append(ui_elements.Rect(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.colour, width=self.width))
             self.painting_surface.elements.pop()
 
         elif self.tool == ELLIPSE:
-            self.painting_surface.elements.append(ui_elements.Ellipse(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.colour))
+            self.painting_surface.elements.append(ui_elements.Ellipse(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.colour, width=self.width))
             self.painting_surface.elements.pop()
 
         elif self.tool == TEXT:
-            new = ui_elements.TextField(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.backup_colour, "Text", self.colour, self.font, 128, (pygame.K_a, pygame.K_z), [pygame.K_SPACE])
+            new = ui_elements.TextField(self.painting_surface, rect.left, rect.top, rect.width, rect.height, self.backup_colour, "Text", self.colour, self.font, 128, self.width, (pygame.K_a, pygame.K_z), [pygame.K_SPACE])
             new.is_highlighted = True
             self.painting_surface.elements.append(new)
             self.painting_surface.elements.pop()
