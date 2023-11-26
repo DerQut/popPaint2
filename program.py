@@ -77,10 +77,7 @@ F2-  Zmiana koloru głównego
 F3-  Zmiana koloru zapasowego
 F4-  Zamiana kolorów
 
-F9-  Zmiana grubości linii
-       oraz rozmiaru czcionki
-       
-F10- Zmiana czcionki
+F9-  Ustawienia narzędzia
  
 F11- Zapis do pliku
 F12- Odczyt z pliku""")
