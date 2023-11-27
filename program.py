@@ -90,6 +90,8 @@ F12- Odczyt z pliku""")
             cursor.swap_colours()
 
         elif event_key == pygame.K_F9:
+            if cursor.tool != paint.LINE:
+                cursor.width = parser.get_value("Zmiana grubości rysowania", "Grubość:", cursor.width)
             if cursor.tool != paint.TEXT:
                 cursor.thickness = parser.get_value("Zmiana grubości pędzla", "Grubość:", cursor.thickness)
             else:

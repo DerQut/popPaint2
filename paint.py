@@ -54,7 +54,7 @@ class Cursor:
         self.pos_buffer = (0, 0)
 
         self.thickness = 5
-        self.width = 5
+        self.width = 0
 
         self.font_size = 18
         self.font_name = "assets/SFPRODISPLAYMEDIUM.OTF"
